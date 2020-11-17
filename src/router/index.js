@@ -44,9 +44,9 @@ const isPermitted = name => {
 };
 
 const existTab = name => {
-  const finded = store.state.tabs.find(tab => tab.name === name);
+  const finded = routes.find(tab => tab.name === name);
   return typeof finded !== "undefined";
-}
+};
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
