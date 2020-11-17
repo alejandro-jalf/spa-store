@@ -1,6 +1,8 @@
 const configs = (() => {
   const URL_API_CONECTIONS = process.env.VUE_APP_URL_API_CONECTIONS;
   const URL_API_ARTICULOS = process.env.VUE_APP_URL_API_ARTICULOS;
+  const USER_TEMP = process.env.VUE_APP_USER;
+  const PASSWORD_TEMP = process.env.VUE_APP_PASSWORD;
 
   const NAMES_SUC = {};
   NAMES_SUC[`${process.env.VUE_APP_NAME_SUC_ZARAGOZA}`] = "ZARAGOZA";
@@ -12,7 +14,9 @@ const configs = (() => {
   return {
     NAMES_SUC,
     URL_API_CONECTIONS,
-    URL_API_ARTICULOS
+    URL_API_ARTICULOS,
+    USER_TEMP,
+    PASSWORD_TEMP
   };
 })();
 

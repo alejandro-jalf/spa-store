@@ -1,32 +1,25 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <b-overlay :show="loading" no-wrap></b-overlay>
+    <NavBar v-if="login"></NavBar>
+    <router-view :class="{ container: login }" />
+    <Alert></Alert>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { mapState } from "vuex";
+import NavBar from "./components/NavBar";
+import Alert from "./components/Alert";
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+export default {
+  name: "app",
+  components: {
+    NavBar,
+    Alert
+  },
+  computed: {
+    ...mapState(["loading", "login"])
+  }
+};
+</script>
