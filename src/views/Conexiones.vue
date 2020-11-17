@@ -19,6 +19,9 @@ export default {
   },
   methods: {
     ...mapActions(["getConexions"])
+  },
+  mounted() {
+    this.getConexions();
   }
 };
 </script>
