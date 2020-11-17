@@ -46,7 +46,6 @@ const isPermitted = name => {
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (store.state.login) {
-      console.log("estas logueado");
       if (isPermitted(to.name)) {
         next();
       } else {
@@ -60,13 +59,11 @@ router.beforeEach((to, from, next) => {
       next({ name: "Login" });
     }
   } else {
-    console.log("sin auntenticar");
     if (to.name === "Login" && store.state.login) {
       console.log("sesion abierta");
       next({ name: store.state.userAccessTo[0] });
       return;
     }
-    console.log("No estas logueado");
     next();
   }
 });
