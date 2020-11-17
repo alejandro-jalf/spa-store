@@ -43,27 +43,43 @@ const isPermitted = name => {
   return typeof finded !== "undefined";
 };
 
+const existTab = name => {
+  const finded = store.state.tabs.find(tab => tab.name === name);
+  return typeof finded !== "undefined";
+}
+
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (store.state.login) {
+      console.log("estas logueado");
       if (isPermitted(to.name)) {
         next();
       } else {
         store.commit("showAlertDialog", [
           "No tienes autorizacion para entrar a esta ruta"
         ]);
-        next({ name: store.state.userAccessTo[0] });
       }
     } else {
       console.log("sesion cerrada");
       next({ name: "Login" });
     }
   } else {
+    console.log("sin auntenticar");
     if (to.name === "Login" && store.state.login) {
       console.log("sesion abierta");
       next({ name: store.state.userAccessTo[0] });
       return;
     }
+    if (to.name !== "Login" && !store.state.login) {
+      next({ name: "Login" });
+      return;
+    }
+    if (!existTab(to.name)) {
+      store.commit("showAlertDialog", ["Esta ruta no existe"]);
+      next({ name: "Home" });
+      return;
+    }
+    console.log("No estas logueado");
     next();
   }
 });
