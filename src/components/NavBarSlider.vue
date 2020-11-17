@@ -18,6 +18,7 @@
             variant="light"
             :key="indice"
             :disabled="actived(tab, userAccessTo)"
+            replace
             class="d-flex justify-content-between align-items-center"
           >
             <div class="any">

@@ -15,6 +15,7 @@
             :to="tab.ruta"
             :disabled="actived(tab, userAccessTo)"
             :key="index"
+            replace
           >
             {{ tab.titulo }}
           </b-nav-item>
