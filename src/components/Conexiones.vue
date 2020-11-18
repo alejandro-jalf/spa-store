@@ -23,7 +23,7 @@ export default {
   name: "Conexiones",
   data() {
     return {
-      conexionesSkeleton: [0, 1, 2, 3, 4, 5]
+      conexionesSkeleton: [0, 1, 2, 3, 4]
     };
   },
   components: {
