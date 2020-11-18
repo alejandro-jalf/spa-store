@@ -2,12 +2,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand>
-        <img
-          src="../assets/cesta.png"
-          width="30px"
-          height="30px"
-          alt="Kitten"
-        />
+        <img src="../assets/cesta.png" width="30px" height="30px" />
         SPA 2020
       </b-navbar-brand>
 
