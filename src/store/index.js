@@ -23,6 +23,7 @@ export default new Vuex.Store({
         name: "Conexiones"
       }
     ],
+    tabActual: "Inicio",
     login: localStorage.getItem("session") || false,
     userName: localStorage.getItem("userName") || "",
     userPrivilegios: localStorage.getItem("userPrivilegios") || "",
@@ -84,7 +85,11 @@ export default new Vuex.Store({
       });
       console.log(tabs);
       return tabs;
-  }
+    },
+    setTabActual(state, actual) {
+      const tabFinded = state.tabs.find(tab => tab.name === actual);
+      state.tabActual = tabFinded.titulo;
+    }
   },
   actions: {
     getConexions({ commit }) {

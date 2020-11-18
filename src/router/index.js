@@ -51,6 +51,7 @@ const existTab = name => {
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (store.state.login) {
+      store.commit("setTabActual", to.name);
       console.log("estas logueado");
       if (isPermitted(to.name)) {
         next();
