@@ -21,6 +21,16 @@
         class="mb-4"
         v-model="textPassword"
         ref="password"
+        @keyup.enter="focusApi"
+      ></b-form-input>
+      <!-- temp -->
+      <b-form-input
+        v-if="!existApi"
+        type="text"
+        placeholder="apiValidarConexion"
+        class="mb-4"
+        v-model="apiConexiones"
+        ref="textApi"
         @keyup.enter="submitData()"
       ></b-form-input>
       <b-button
@@ -48,15 +58,26 @@ export default {
     return {
       status: "password",
       textUser: "",
-      textPassword: ""
+      textPassword: "",
+      apiConexiones: "", //temp
+      existApi: false //temp
     };
   },
   mounted() {
+    this.existApi = localStorage.getItem("apiConexiones") !== null; //temp
     this.$refs.user.focus();
   },
   methods: {
     ...mapActions(["initSesion"]),
     ...mapMutations(["showAlertDialog"]),
+    // temp
+    focusApi() {
+      if (this.existApi) {
+        this.submitData();
+        return;
+      }
+      this.$refs.textApi.focus();
+    },
     focusPassword() {
       this.$refs.password.focus();
     },
@@ -69,7 +90,20 @@ export default {
         this.showAlertDialog(["Campo contraseña vacio"]);
         return;
       }
-      this.initSesion([this.textUser, this.textPassword, this.$router]);
+      //temp
+      console.log(this.apiConexiones.trim(), !this.existApi);
+      if (this.apiConexiones.trim() === "" && !this.existApi) {
+        this.showAlertDialog(["falta ingresar la url de apiValidarConexiones"]);
+        return;
+      }
+      if (this.existApi)
+        this.apiConexiones = localStorage.getItem("apiConexiones");
+      this.initSesion([
+        this.textUser,
+        this.textPassword,
+        this.$router,
+        this.apiConexiones
+      ]);
     }
   }
 };

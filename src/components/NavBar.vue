@@ -45,6 +45,10 @@
             <b-dropdown-item @click="logout($router)">
               Cerrar sesion
             </b-dropdown-item>
+            <!-- temp -->
+            <b-dropdown-item @click="resetUrlApi()">
+              Reset urlApi
+            </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -79,10 +83,16 @@ export default {
     });
   },
   methods: {
-    ...mapMutations(["logout"]),
+    ...mapMutations(["logout", "showAlertDialog"]),
     actived({ name }, access) {
       const finded = access.find(element => element === name);
       return typeof finded === "undefined";
+    },
+    // temp
+    resetUrlApi() {
+      localStorage.removeItem("apiConexiones");
+      this.showAlertDialog(["Url eliminada"]);
+      this.logout(this.$router);
     }
   },
   computed: {

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-import { URL_API_CONECTIONS, USER_TEMP, PASSWORD_TEMP } from "../configs";
+import { USER_TEMP, PASSWORD_TEMP } from "../configs";
 
 Vue.use(Vuex);
 
@@ -52,6 +52,7 @@ export default new Vuex.Store({
       const stringAccess = JSON.stringify(user.accessTo);
       localStorage.setItem("userAccessTo", stringAccess);
       localStorage.setItem("session", true);
+      localStorage.setItem("apiConexiones", user.apiValidaConexion);
     },
     logout(state, router) {
       state.userName = "";
@@ -65,7 +66,15 @@ export default new Vuex.Store({
       localStorage.removeItem("session");
       router.push({ name: "Login" });
     },
-    showAlertDialog: (state, [message = null, title = "Advertencia", background = "warning", textColor = "light" ]) => {
+    showAlertDialog: (
+      state,
+      [
+        message = null,
+        title = "Advertencia",
+        background = "warning",
+        textColor = "light"
+      ]
+    ) => {
       if (message === null) return;
       state.alertShow = true;
       state.alertMessage = message;
@@ -83,7 +92,6 @@ export default new Vuex.Store({
         );
         return typeof accessFinded !== "undefined" ? true : false;
       });
-      console.log(tabs);
       return tabs;
     },
     setTabActual(state, actual) {
@@ -95,7 +103,7 @@ export default new Vuex.Store({
     getConexions({ commit }) {
       commit("setLoading", true);
       axios
-        .get(URL_API_CONECTIONS)
+        .get(localStorage.getItem("apiConexiones"))
         .then(function (response) {
           commit("setData", response.data.data);
           commit("setLoading", false);
@@ -105,7 +113,8 @@ export default new Vuex.Store({
           commit("setLoading", false);
         });
     },
-    async initSesion({ commit }, [user, password, router]) {
+    // tepm: apiValidaConexion
+    async initSesion({ commit }, [user, password, router, apiValidaConexion]) {
       user = user.trim();
       password = password.trim();
 
@@ -120,7 +129,8 @@ export default new Vuex.Store({
       const userLogin = {
         nameUser: user,
         privilegios: "all",
-        accessTo: ["Conexiones", "Home"]
+        accessTo: ["Conexiones", "Home"],
+        apiValidaConexion //temp
       };
       commit("login", userLogin);
       router.push({ name: userLogin.accessTo[0] });
@@ -167,6 +177,6 @@ export default new Vuex.Store({
         }
         commit("setLoading", false);
       }
-    },
+    }
   }
 });

@@ -33,6 +33,10 @@
         <b-button block variant="info" @click="logout(router)">
           Cerrar sesion
         </b-button>
+        <!-- Temp -->
+        <b-button block variant="warning" @click="resetUrlApi()">
+          Reset urlApi
+        </b-button>
       </div>
     </b-sidebar>
   </div>
@@ -47,13 +51,19 @@ export default {
     router: Object
   },
   methods: {
-    ...mapMutations(["logout"]),
+    ...mapMutations(["logout", "showAlertDialog"]),
     actived({ name }, access) {
       const finded = access.find(element => element === name);
       return typeof finded === "undefined";
     },
     isFocused({ name }) {
       return this.$route.name === name;
+    },
+    // temp
+    resetUrlApi() {
+      localStorage.removeItem("apiConexiones");
+      this.showAlertDialog(["Url eliminada"]);
+      this.logout(this.$router);
     }
   },
   computed: {
