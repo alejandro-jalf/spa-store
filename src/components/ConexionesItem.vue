@@ -1,7 +1,7 @@
 <template>
   <b-list-group-item class="d-flex align-items-center">
     <b-icon
-      variant="primary"
+      :variant="isOn(sucursal.success)"
       :icon="loadActive(sucursal.success)"
       class="mr-3"
       font-scale="2"
@@ -29,6 +29,9 @@ export default {
   methods: {
     loadActive(value) {
       return value ? "toggle-on" : "toggle-off";
+    },
+    isOn(success) {
+      return success ? "primary" : "danger";
     }
   }
 };
